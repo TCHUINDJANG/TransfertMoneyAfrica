@@ -250,20 +250,6 @@ def create_profil(request):
     except Exception as error:
          return Response({'error':'echec de la creation du profil' } , status=status.HTTP_400_BAD_REQUEST)
 
-
-    
-    
-    
-
-   
-    
-
-    
-
-
-
-
-
    
 #Récupère le profil de l'utilisateur authentifié.
 @api_view(['GET'])
