@@ -19,4 +19,4 @@ class Operations(Base_cash_send):
             ordering = ['-date_of_creation'] 
 
     def __str__(self):
-             return self.date_of_creation
+        return self.user.username

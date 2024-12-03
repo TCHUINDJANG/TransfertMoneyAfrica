@@ -49,7 +49,7 @@ class TransactionHistory (Base_cash_send):
             ordering = ['-sender'] 
 
     def __str__(self):
-        return f"History for Transaction {self.transaction.id} by {self.user.username}"
+        return f"History for Transaction {self.transaction_id.id} by {self.user.username}"
 
 
 class Notification (Base_cash_send):

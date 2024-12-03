@@ -77,14 +77,29 @@ class UserRegistrationModel(AbstractUser):
 
 class Accounts(Base_cash_send):
     user = models.OneToOneField(UserRegistrationModel, on_delete=models.PROTECT)
-    solde = models.PositiveIntegerField(("Solde disponible dans le compte") , default = 0.00)
-    devise = models.CharField(max_length=10)
+    solde = models.PositiveIntegerField(("Solde disponible dans le compte") , default = 5000.00)
+    devise = models.CharField(max_length=10 , default="XAF")
     
     class Meta:
             ordering = ['-solde'] 
 
     def __str__(self):
              return f"Balance for {self.user.username}: {self.solde} {self.devise}"
+    
+
+
+#     class Accounts(Base_cash_send):
+#     user = models.OneToOneField(UserRegistrationModel, on_delete=models.PROTECT)
+#     solde = models.PositiveIntegerField(("Solde disponible dans le compte") , default = 5000.00)
+#     devise = models.CharField(max_length=10 , default="XAF")
+    
+#     class Meta:
+#             ordering = ['-solde'] 
+
+#     def __str__(self):
+#              return f"Balance for {self.user.username}: {self.solde} {self.devise}"
+    
+
     
 
 class Profile(Base_cash_send):
