@@ -18,21 +18,12 @@ def create_transaction_notification(sender, instance, created , **kwargs):
 
 @receiver(post_save , sender=Transaction)
 def send_transactions_history(sender, instance, created , **kwargs):
+    transaction = instance
     if created:
+        try:
+            TransactionHistory.objects.create(transaction=transaction)
+        except Exception as error:
+            pass
           # Si la transaction est nouvellement créée, on enregistre un nouvel historique
-        TransactionHistory.objects.create(
-            user=instance.sender,                # L'utilisateur qui a effectué la transaction
-            transaction=instance,              # L'instance de la transaction
-            amount=instance.amount,            # Montant de la transaction
-            status=instance.statut             # Statut de la transaction (par exemple "completed", "pending")
-        )
-    else:
-        # Si la transaction a été mise à jour, vous pouvez mettre à jour l'historique existant si nécessaire
-        # Pour cet exemple, nous créons une nouvelle entrée dans l'historique même en cas de mise à jour
-        TransactionHistory.objects.create(
-            user=instance.sender,                # L'utilisateur qui a effectué la transaction
-            transaction=instance,              # L'instance de la transaction
-            amount=instance.amount,            # Montant de la transaction
-            status=instance.statut             # Statut de la transaction
-        )
+      
         

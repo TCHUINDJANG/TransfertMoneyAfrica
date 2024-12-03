@@ -17,7 +17,7 @@ from . import views
 
 urlpatterns = [
     #Authentication
-    path('accounts/auth-register/', register_user, name='register'),
+    path('accounts/auth-registers/', register_user, name='register'),
     path('accounts/forgot-password/', forgot_password , name='forgot-password'),
     path('accounts/reset-password/', reset_password, name='reset-password'),
     path('api/token/login/', UserTokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -29,7 +29,6 @@ urlpatterns = [
     # path('accounts/verify_email/', verify_email, name='verify_email'),
 
     #Profile
-    path('profile/post/', create_profil, name='post_profile'),
     path('profile/update/', update_profile, name='update_profile'),
     path('profile/get-user/', views.get_user_profile, name='get_profile'),
     path('profile/delete/', views.delete_user_profile, name='delete_user_profile'),

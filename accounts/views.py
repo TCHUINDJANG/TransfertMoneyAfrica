@@ -71,6 +71,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 @api_view(['POST'])
 def register_user(request):
      if request.method == 'POST':
+          print('data', request.data)
           serializer = UserRegistrationModelSerializer(data=request.data)
           if serializer.is_valid(raise_exception=True):
                serializer.save()
@@ -111,11 +112,6 @@ def get_all_user(request):
      pagination_class = StandardResultsSetPagination
      return Response(serializer.data , status=status.HTTP_200_OK)
    
-
-
-        
-
-
 @api_view(['POST'])
 def forgot_password(request):
     email = request.data.get('email')

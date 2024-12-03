@@ -90,10 +90,10 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FormParser',  # Parse form data
         'rest_framework.parsers.MultiPartParser',  # Parse file uploads
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',  # Use Django sessions
-        'rest_framework.authentication.TokenAuthentication',  # Optional: Token-based auth
-    ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework.authentication.SessionAuthentication',  # Use Django sessions
+    #     'rest_framework.authentication.TokenAuthentication',  # Optional: Token-based auth
+    # ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [ 'rest_framework_simplejwt.authentication.JWTAuthentication', ], 
     # 'DEFAULT_PERMISSION_CLASSES': [ 'rest_framework.permissions.IsAuthenticated',], # Permet d'accéder aux API sécurisées ],

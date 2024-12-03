@@ -17,6 +17,3 @@ def create_profile_on_registration(sender , instance , created ,**kwargs):
             except ValueError:
                  pass
             
-@receiver(post_save, sender=UserRegistrationModel)
-def save_user_profil(ender, instance, **kwargs):
-     instance.profile.save()

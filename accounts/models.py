@@ -1,6 +1,8 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser 
+from django.db.models .signals import post_save , pre_save , post_delete , pre_delete , m2m_changed
+from django.dispatch import receiver
 
 
 ROLE_CHOICES = [
@@ -16,8 +18,8 @@ GENDER = [
 
 class Base_cash_send(models.Model):
     id = models.UUIDField(primary_key=True , default=uuid.uuid4 , editable=False)
-    date_of_update = models.DateTimeField(auto_created=True)
-    date_of_creation = models.DateTimeField(auto_created=True)
+    date_of_update = models.DateTimeField(auto_created=True , null=True , blank=True)
+    date_of_creation = models.DateTimeField(auto_created=True , null=True , blank=True)
     ip_adress =  models.GenericIPAddressField(null=True , blank=True)
 	
     class Meta:
@@ -101,7 +103,8 @@ class Profile(Base_cash_send):
             ordering = ['-user'] 
 
     def __str__(self):
-             return f"{self.first_name} {self.last_name}"
+             return f"{self.user} "
+    
     
 
 

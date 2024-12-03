@@ -59,8 +59,8 @@ def send_transaction_email(user , transaction):
 @api_view(['POST'])
 @permission_classes([ permissions.IsAuthenticated , IsUser])
 def create_transactionView(request):
-    sender_id = request.data.get('sender')
-    receiver_id = request.data.get('receiver')
+    sender = request.data.get('sender')
+    receiver = request.data.get('receiver')
     amount = request.data.get('amount')
     base_currency = request.data.get('currency_from')
     currency_to_id = request.data.get('currency_to')
@@ -68,12 +68,12 @@ def create_transactionView(request):
     devise = request.data.get('devise')
     
     try:
-        sender = User.objects.get(id=sender_id)
-        receiver = User.objects.get(id=receiver_id)
+        sender = User.objects.get(id=sender)
+        receiver = User.objects.get(id=receiver)
         base_currency = Devise.objects.get(id=base_currency)
-        currency_to = Devise.objects.get(id=currency_to_id)
-        amount = Devise.objects.get(id=amount)
-        statut = Devise.objects.get(id=statut)
+        target_currency = Devise.objects.get(id=target_currency)
+        amount = Transaction.objects.get(id=amount)
+        statut = Transaction.objects.get(id=statut)
 
     except User.DoesNotExist or Devise.DoesNotExist:
         return Response({"error": "Invalid user or currency ID"}, status=status.HTTP_400_BAD_REQUEST)
@@ -95,7 +95,7 @@ def create_transactionView(request):
                 receiver=receiver,
                 amount=amount,
                 currency_from=base_currency,
-                currency_to=currency_to,
+                currency_to=target_currency,
                 exchange_rate=exchange_rate,
                 statut='en_cours'
             )

@@ -34,8 +34,8 @@ class Transaction (Base_cash_send):
 
 class TransactionHistory (Base_cash_send):
     transaction_id = models.OneToOneField(Transaction, on_delete=models.CASCADE)
-    sender = models.EmailField(('sender'),max_length=100)
-    receiver  = models.CharField(('receiver'), max_length=100)
+    sender =  models.OneToOneField(User, on_delete=models.PROTECT , related_name='sender')
+    receiver   = models.OneToOneField(User, on_delete=models.PROTECT  , related_name='receiver')
     user = models.ForeignKey(User, on_delete=models.CASCADE , default=1)
     created_at = models.DateTimeField(auto_now_add=True , blank=True , null=True)
     updated_at = models.DateTimeField(auto_now=True , blank=True , null=True)
@@ -69,6 +69,7 @@ class Devise (Base_cash_send):
     target_currency = models.CharField(default='RUB' , max_length=3)  # Taux de change
     last_updated = models.DateTimeField(auto_now=True)  # Date de la dernière mise à jour
     rate= models.DecimalField(max_digits=5 , decimal_places=4)
+
     class Meta:
             ordering = ['-base_currency'] 
 
