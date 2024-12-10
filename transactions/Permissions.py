@@ -7,6 +7,6 @@ class AuthorTransactionPermission(permissions.BasePermission):
         if request.method in ["GET", "OPTIONS" , "HEAD"]:
             return True
         if  request.method in ["PUT" ,  "PATCH" , "DELETE"]:
-            if obj.user == request.user:
+            if obj.sender == request.user:
                 return True
             return False

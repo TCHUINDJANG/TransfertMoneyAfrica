@@ -18,6 +18,7 @@ from django.db import transaction as atomictransaction
 from rest_framework.exceptions import ValidationError
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q
+from transactions .models import TransactionHistory
 
 
 
@@ -33,7 +34,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 def getTransactionView(request):
     transaction = Transaction.objects.all()
     if not request.user.is_staff:
-        transactionGet = Transaction.objects.filter(user=request.user)
+        transactionGet = Transaction.objects.filter(sender=request.user)
     serializer = TransactionSerializer(transaction , many=True)
     pagination_class = StandardResultsSetPagination
     return Response(serializer.data)
@@ -127,7 +128,7 @@ def create_transactionView(request):
 
 
 @api_view(['PUT'])
-@permission_classes([ permissions.IsAuthenticated , IsUser , AuthorTransactionPermission ,CanUpdateTransaction ])
+@permission_classes([ AuthorTransactionPermission  ])
 def updateTransactionView(request , pk):
     
     transaction = get_object_or_404(Transaction , pk=pk)
@@ -171,17 +172,17 @@ def deleteTransactionView(request, pk):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated, AuthorTransactionPermission])
 def transaction_history(request):
-    transactions = Transaction.objects.filter(sender=request.user).or_filter(receiver=request.user).order_by('-timestamp')
+    transactions = TransactionHistory.objects.filter(sender=request.user).or_filter(receiver=request.user).order_by('-timestamp')
     serializer = TransactionHistorySerializer(transactions , many=True)
     return Response(serializer.data)
 
 
-#api pour recevoir de l'argent
+#api pour recevoir de l'argent filtrer avec les Q pour avoir les transaction quand je suis envoyeur et receiver
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated, AuthorTransactionPermission])
 def receive_money(request):
     #retournons les trnsactions recus par l'utilisateur connecte
-    transactions = Transaction.objects.filter(receiver=request.user).order_by('timestamp')
+    transactions = TransactionHistory.objects.filter(receiver=request.user).order_by('timestamp')
     serializer = TransactionHistorySerializer(transactions , many=True)
     return Response(serializer.data)
 

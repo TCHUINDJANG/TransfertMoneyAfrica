@@ -34,8 +34,8 @@ class Transaction (Base_cash_send):
 
 class TransactionHistory (Base_cash_send):
     transaction_id = models.OneToOneField(Transaction, on_delete=models.CASCADE)
-    sender =  models.OneToOneField(User, on_delete=models.PROTECT , related_name='sender')
-    receiver   = models.OneToOneField(User, on_delete=models.PROTECT  , related_name='receiver')
+#     sender =  models.OneToOneField(User, on_delete=models.PROTECT , related_name='sender')
+#     receiver   = models.OneToOneField(User, on_delete=models.PROTECT  , related_name='receiver')
     user = models.ForeignKey(User, on_delete=models.CASCADE , default=1)
     created_at = models.DateTimeField(auto_now_add=True , blank=True , null=True)
     updated_at = models.DateTimeField(auto_now=True , blank=True , null=True)
