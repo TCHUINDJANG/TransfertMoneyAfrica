@@ -46,7 +46,7 @@ class TransactionHistory (Base_cash_send):
 #     statut_last_history_transaction= models.CharField(choices=status)
 
     class Meta:
-            ordering = ['-sender'] 
+            ordering = ['-created_at'] 
 
     def __str__(self):
         return f"History for Transaction {self.transaction_id.id} by {self.user.username}"

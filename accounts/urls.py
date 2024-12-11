@@ -1,7 +1,7 @@
 from rest_framework.routers import DefaultRouter
 
 from accounts.api import UserTokenObtainPairView
-from .views import  register_user ,get_all_user,create_profil ,  forgot_password ,change_password, reset_password,user_logout, update_profile , TokenRefresh
+from .views import  register_user ,get_all_user ,  forgot_password ,change_password, reset_password,user_logout, update_profile , TokenRefresh
 from django.urls import path, include 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView , TokenRefreshView , TokenVerifyView
