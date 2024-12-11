@@ -211,41 +211,6 @@ def get_user_profile(request):
    serializer = ProfileSerializer(profile , many=False)
    return Response(serializer.data , status=status.HTTP_200_OK)
 
-
-
-@api_view(['POST'])
-@permission_classes([ permissions.IsAuthenticated , IsUser])
-def create_profil(request):
-    document_of_personnel_identification = request.data.get('document_of_personnel_identification')
-    adress_of_residence = request.data.get('adress_of_residence')
-    region = request.data.get('region')
-    birth_day = request.data.get('birth_day')
-    bio = request.data.get('bio')
-    email = request.data.get('email')
-    profile_picture = request.data.get('profile_picture')
-    user = request.data.get('user')
-
-    #si le profil n'existe pas je cree
-    try:
-        profile , created = Profile.objects.get_or_create(user=user)
-        
-        profile = Profile.objects.create(
-        document_of_personnel_identification = document_of_personnel_identification,
-        adress_of_residence = adress_of_residence,
-        region = region,
-        birth_day = birth_day,
-        bio = bio,
-        email = email,
-        profile_picture = profile_picture,
-        user = user
-    )
-        profile.save()
-        serializer = ProfileSerializer(profile)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-    except Exception as error:
-         return Response({'error':'echec de la creation du profil' } , status=status.HTTP_400_BAD_REQUEST)
-
    
 #Récupère le profil de l'utilisateur authentifié.
 @api_view(['GET'])

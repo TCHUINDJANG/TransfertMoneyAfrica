@@ -169,15 +169,23 @@ def deleteTransactionView(request, pk):
 
 
 #api recuperer pour recuper l'historique des trnsactions de l'utiisateur connecte
+#filtrer avec les Q pour avoir les transaction quand je suis envoyeur et receiver
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated, AuthorTransactionPermission])
 def transaction_history(request):
-    transactions = TransactionHistory.objects.filter(sender=request.user).or_filter(receiver=request.user).order_by('-timestamp')
+    sender = User.objects.get(sender= request.user)
+    receiver = User.objects.get(receiver= request.user)
+
+    try:
+          transactions = TransactionHistory.objects.get(Q(sender=sender) | Q(receiver=receiver))
+    except Exception as error:
+        pass
+  
     serializer = TransactionHistorySerializer(transactions , many=True)
     return Response(serializer.data)
 
 
-#api pour recevoir de l'argent filtrer avec les Q pour avoir les transaction quand je suis envoyeur et receiver
+#api pour recevoir de l'argent 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated, AuthorTransactionPermission])
 def receive_money(request):
